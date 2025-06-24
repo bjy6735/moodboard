@@ -87,34 +87,26 @@
       display: flex;
       flex-direction: column;
       gap: 0.5rem;
-      background: rgba(255, 255, 255, 0.9);
-      padding: 0.5rem;
-      border-radius: 6px;
     }
 
-    #controls input[type="file"], #saveBtn, #filename {
+    #controls input[type="file"], #saveBtn {
       background: white;
       padding: 0.5rem 1rem;
       border: 1px solid #ccc;
       border-radius: 4px;
-      font-size: 0.9rem;
-    }
-
-    #filename {
-      width: 140px;
+      cursor: pointer;
     }
   </style>
 </head>
 <body>
-  <header>🎨 Color Moodboard Generator</header>
+  <header>Moodboard Generator</header>
   <main>
     <div id="left">
       <div id="controls">
         <input type="file" accept="image/*" id="imageInput" />
-        <input type="text" id="filename" placeholder="moodboard-name" />
-        <button id="saveBtn">💾 Save</button>
+        <button id="saveBtn">💾 Save Moodboard</button>
       </div>
-      <img id="preview" style="display:none;" />
+      <img id="preview" />
     </div>
     <div id="right">
       <div id="palette"></div>
@@ -126,7 +118,6 @@
     const preview = document.getElementById("preview");
     const palette = document.getElementById("palette");
     const saveBtn = document.getElementById("saveBtn");
-    const filenameInput = document.getElementById("filename");
 
     imageInput.addEventListener("change", (e) => {
       const file = e.target.files[0];
@@ -213,8 +204,7 @@
     saveBtn.addEventListener("click", () => {
       html2canvas(document.querySelector("main")).then(canvas => {
         const link = document.createElement('a');
-        const name = filenameInput.value.trim() || 'moodboard';
-        link.download = name + '.png';
+        link.download = 'moodboard.png';
         link.href = canvas.toDataURL();
         link.click();
       });
